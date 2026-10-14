@@ -52,8 +52,38 @@ for(let i in users){
 console.log(valid_name);
 
 
+async function getProducts() {
+    try {
+        const res = await fetch("https://fakestoreapi.com/products");
+
+        if (!res.ok) {
+            throw new Error(`HTTP error: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log(data);
+    } catch (error) {
+        console.error("Failed to fetch products:", error);
+    }
+}
+
+getProducts();
 
 
+console.log("A");
 
+setTimeout(() => {
+  console.log("B");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("C");
+});
+
+console.log("D");
+
+
+// A, D, C, B -> A, D as they are asynchronous where as C will go to microtask queue
+// and B will go to macrotask queue
 
 
